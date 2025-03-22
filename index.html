@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Box</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            background-color: #222;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: white;
+            color: black;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+
+    <textarea id="message" placeholder="Write your message here..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            var message = document.getElementById("message").value;
+            var referrer = document.referrer || "Direct Access"; // Captures Instagram referrer
+
+            // Sends form data to your email via FormSubmit
+            fetch("https://formsubmit.co/YOUR_EMAIL_HERE", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: message,
+                    referrer: referrer
+                })
+            }).then(response => {
+                alert("Message sent!");
+                document.getElementById("message").value = ""; // Clears the text area
+            });
+        }
+    </script>
+
+</body>
+</html>
