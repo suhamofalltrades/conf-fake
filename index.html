@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message Box</title>
+    <title>Anonymous Message</title>
     <style>
         body {
             background-color: black;
@@ -14,6 +14,7 @@
             height: 100vh;
             flex-direction: column;
             font-family: Arial, sans-serif;
+            text-align: center;
         }
         textarea {
             width: 80%;
@@ -23,6 +24,7 @@
             border: none;
             padding: 10px;
             font-size: 16px;
+            resize: none;
         }
         button {
             margin-top: 10px;
@@ -36,20 +38,28 @@
         button:hover {
             background-color: grey;
         }
+        #confirmation {
+            margin-top: 20px;
+            display: none;
+            font-size: 18px;
+            color: green;
+        }
     </style>
 </head>
 <body>
 
-    <textarea id="message" placeholder="Write your message here..."></textarea>
+    <h2>Send me an anonymous message!</h2>
+    <textarea id="message" placeholder="Write your message here..." required></textarea>
     <button onclick="sendMessage()">Send</button>
+    <p id="confirmation">✅ Message Sent!</p>
 
     <script>
         function sendMessage() {
             var message = document.getElementById("message").value;
             var referrer = document.referrer || "Direct Access"; // Captures Instagram referrer
 
-            // Sends form data to your email via FormSubmit
-            fetch("https://formsubmit.co/suhamofalltrades@gmail.com", {
+            // Sends form data to FormSubmit (No reload, No new tab)
+            fetch("https://formsubmit.co/YOUR_REAL_EMAIL@gmail.com", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -59,11 +69,14 @@
                     referrer: referrer
                 })
             }).then(response => {
-                alert("Message sent!");
-                document.getElementById("message").value = ""; // Clears the text area
+                document.getElementById("message").value = ""; // Clear the input box
+                document.getElementById("confirmation").style.display = "block"; // Show message sent
+                setTimeout(() => {
+                    document.getElementById("confirmation").style.display = "none"; // Hide after 3 sec
+                }, 3000);
             });
         }
     </script>
 
 </body>
-</html>
+</html>    
